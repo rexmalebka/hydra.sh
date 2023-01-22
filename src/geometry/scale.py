@@ -8,7 +8,7 @@ from source import str_to_source
 
 
 if __name__ == "__main__":
-    parser = argparse.ArgumentParser(description='osc source')
+    parser = argparse.ArgumentParser(description='scale function')
 
     if os.isatty(0):
         parser.add_argument('source', type=str_to_source)
@@ -82,8 +82,4 @@ if __name__ == "__main__":
 
     source.add_effect("scale", arg_list)
 
-    OUTPUT = str(source)
-
-    if not sys.stdout.isatty():
-        OUTPUT = OUTPUT.replace(' ', '\x01')
-    print(OUTPUT)
+    print(str(source))

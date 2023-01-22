@@ -1,5 +1,5 @@
 """
-repeatX function
+luma function
 """
 import argparse
 import sys
@@ -8,7 +8,7 @@ from source import str_to_source
 
 
 if __name__ == "__main__":
-    parser = argparse.ArgumentParser(description='repeatX function')
+    parser = argparse.ArgumentParser(description='luma function')
 
     if os.isatty(0):
         parser.add_argument('source', type=str_to_source)
@@ -21,37 +21,37 @@ if __name__ == "__main__":
 
     parser.add_argument('args', type=float, nargs='*')
 
-    parser.add_argument('-reps', '--reps', type=float)
-    parser.add_argument('-offset', '--offset', type=float)
+    parser.add_argument('-threshold', '--threshold', type=float)
+    parser.add_argument('-tolerance', '--tolerance', type=float)
 
     args = parser.parse_args()
 
     source = args.source
 
     effect_args = {
-            "reps": 3.0,
-            "offset": 0.0,
+            "threshold": 0.5,
+            "tolerance": 0.1,
             }
 
     # from positional args
     if len(args.args) > 0:
-        effect_args["reps"] = args.args[0]
+        effect_args["threshold"] = args.args[0]
 
     if len(args.args) > 1:
-        effect_args["offset"] = args.args[1]
+        effect_args["tolerance"] = args.args[1]
 
     # from optional args
-    if args.reps is not None:
-        effect_args["reps"] = args.reps
+    if args.threshold is not None:
+        effect_args["threshold"] = args.threshold
 
-    if args.offset is not None:
-        effect_args["offset"] = args.offset
+    if args.tolerance is not None:
+        effect_args["tolerance"] = args.tolerance
 
     arg_list = [
-            effect_args["reps"],
-            effect_args["offset"],
+            effect_args["threshold"],
+            effect_args["tolerance"],
             ]
 
-    source.add_effect("repeatX", arg_list)
+    source.add_effect("luma", arg_list)
 
     print(str(source))

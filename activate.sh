@@ -35,6 +35,18 @@ unset_alias(){
 	do
 		unalias "${a%.*}"
 	done
+
+	# unset alias for color functions
+	for a in $(ls src/color)
+	do
+		unalias "${a%.*}"
+	done
+
+	# unset alias for operators functions
+	for a in $(ls src/operators)
+	do
+		unalias "${a%.*}"
+	done
 }
 
 set_alias(){
@@ -50,6 +62,18 @@ set_alias(){
 	for a in $(ls src/geometry)
 	do
 		alias "${a%.*}"='python 'src/geometry/$a
+	done
+
+	# set alias for color functions
+	for a in $(ls src/color)
+	do
+		alias "${a%.*}"='python 'src/color/$a
+	done
+
+	# set alias for operators functions
+	for a in $(ls src/operators)
+	do
+		alias "${a%.*}"='python 'src/operators/$a
 	done
 }
 
