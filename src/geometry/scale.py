@@ -1,60 +1,89 @@
+"""
+scale function
+"""
 import argparse
 import sys
-import json
+import os
+from source import str_to_source
 
-def source(name, args):
-    output = {
-            "type": "source",
-            "name": name,
-            "args":args
-            }
-
-    return json.dumps(output)
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description='osc source')
+
+    if os.isatty(0):
+        parser.add_argument('source', type=str_to_source)
+    else:
+        cmd = sys.stdin.read()
+        parser.add_argument('-source', '--source',
+                            type=str_to_source,
+                            default=str_to_source(cmd)
+                            )
+
     parser.add_argument('args', type=float, nargs='*')
-    
-    parser.add_argument('--frequency', type=float)
-    parser.add_argument('--sync', type=float)
-    parser.add_argument('--offset', type=float)
-    #frequency: 60, sync: 0.1, offset
+
+    parser.add_argument('-amount', '--amount', type=float)
+    parser.add_argument('-xMult', '--xMult', type=float)
+    parser.add_argument('-yMult', '--yMult', type=float)
+    parser.add_argument('-offsetX', '--offsetX', type=float)
+    parser.add_argument('-offsetY', '--offsetY', type=float)
+
+    # amount: 1.5, xMult: 1, yMult: 1, offsetX: 0.5, offsetY: 0.5
     args = parser.parse_args()
 
-    osc_args = {
-            "frequency": 60,
-            "sync": 0.1,
-            "offset": 0
+    source = args.source
+
+    effect_args = {
+            "amount": 1.5,
+            "xMult": 1,
+            "yMult": 1,
+            "offsetX": 0.5,
+            "offsetY": 0.5,
             }
 
+    # from positional args
     if len(args.args) > 0:
-        osc_args["frequency"] =args.args[0]
+        effect_args["amount"] = args.args[0]
 
     if len(args.args) > 1:
-        osc_args["sync"] =args.args[1]
+        effect_args["xMult"] = args.args[1]
 
     if len(args.args) > 2:
-        osc_args["offset"] =args.args[2]
+        effect_args["yMult"] = args.args[2]
 
+    if len(args.args) > 3:
+        effect_args["offsetX"] = args.args[3]
 
-    if args.frequency != None:
-        osc_args["frequency"] = args.frequency 
+    if len(args.args) > 4:
+        effect_args["offsetY"] = args.args[4]
 
-    if args.sync != None:
-        osc_args["sync"] = args.sync
+    # from optional args
+    if args.amount is not None:
+        effect_args["amount"] = args.amount
 
-    if args.offset != None:
-        osc_args["offset"] = args.offset
+    if args.xMult is not None:
+        effect_args["xMult"] = args.xMult
+
+    if args.yMult is not None:
+        effect_args["yMult"] = args.yMult
+
+    if args.offsetX is not None:
+        effect_args["offsetX"] = args.offsetX
+
+    if args.offsetY is not None:
+        effect_args["offsetY"] = args.offsetY
 
     arg_list = [
-            osc_args["frequency"],
-            osc_args["sync"],
-            osc_args["offset"] 
+            effect_args["amount"],
+            effect_args["xMult"],
+            effect_args["yMult"],
+            effect_args["offsetX"],
+            effect_args["offsetY"],
             ]
 
-    output = source("osc", arg_list)
+    source.add_effect("scale", arg_list)
+
+    OUTPUT = str(source)
 
     if not sys.stdout.isatty():
-        output = output.replace(' ', '\x01')
-    print(output)
-    
+        OUTPUT = OUTPUT.replace(' ', '\x01')
+    print(OUTPUT)
