@@ -67,3 +67,8 @@ done
 
 https://github.com/hydra-synth/hydra/blob/main/docs/funcs.md
 
+## credits
+
+all credits goes to Olivia jack https://github.com/ojack 
+
+
