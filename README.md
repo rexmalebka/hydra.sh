@@ -1,12 +1,23 @@
-# hydra on shell
+# WIP hydra on shell
 
+## HOW TO
+
+Install requirements.txt for python server
+
+```bash
+$ pip install -r requirements.txt
+```
+
+source activation script:
 
 ```bash
 
-# create alias and ws server
-
 $ source activate.sh
+```
 
+start typing some hydra stuff as bash functions:
+
+```bash
 # sources can be piped to effects
 
 $ osc | repeat 2 2
@@ -44,13 +55,15 @@ do
 done
 
 
-
-
 ```
 
-on hydra side:
+## TODO
 
-```javascript
+- write sources and effects scripts
+- add `[].fast` and js code implementation 
+- implement a gui in electron style
 
+## docs:
 
-```
+https://github.com/hydra-synth/hydra/blob/main/docs/funcs.md
+
