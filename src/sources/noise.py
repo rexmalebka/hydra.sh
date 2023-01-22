@@ -26,6 +26,7 @@ if __name__ == "__main__":
     if len(args.args) > 1:
         osc_args["offset"] = args.args[1]
 
+    # from optional args
     if args.scale is not None:
         osc_args["scale"] = args.scale
 

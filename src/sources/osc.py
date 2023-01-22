@@ -31,6 +31,7 @@ if __name__ == "__main__":
     if len(args.args) > 2:
         osc_args["offset"] = args.args[2]
 
+    # from optional args
     if args.frequency is not None:
         osc_args["frequency"] = args.frequency
 
